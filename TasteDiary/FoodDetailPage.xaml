@@ -40,6 +40,18 @@
                 </Grid>
             </Border>
 
+            <Border StrokeThickness="0"
+                    BackgroundColor="{AppThemeBinding Light=#FFF3D6, Dark=#1A1712}"
+                    HeightRequest="220"
+                    Padding="0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="8" />
+                </Border.StrokeShape>
+                <Image x:Name="ItemImage"
+                       Aspect="AspectFill"
+                       SemanticProperties.Description="Photo of this food or drink" />
+            </Border>
+
             <Border StrokeThickness="1"
                     Stroke="{AppThemeBinding Light=#E8D5A3, Dark=#3E3023}"
                     BackgroundColor="{AppThemeBinding Light=#FFFFFA, Dark=#1A1712}"

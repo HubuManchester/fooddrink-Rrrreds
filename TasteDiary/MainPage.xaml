@@ -105,11 +105,13 @@
                             <Border.Shadow>
                                 <Shadow Brush="#22000000" Offset="0,5" Radius="14" Opacity="0.34" />
                             </Border.Shadow>
-                            <Grid ColumnDefinitions="6,*">
-                                <BoxView BackgroundColor="{AppThemeBinding Light=#C41E1E, Dark=#E8755D}" />
-                                <Grid Grid.Column="1" Padding="16" RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="*,Auto" RowSpacing="8" ColumnSpacing="10">
+                            <Grid ColumnDefinitions="90,*" MinimumHeightRequest="110">
+                                <Image Source="{Binding ImageName}"
+                                       Aspect="AspectFill"
+                                       SemanticProperties.Description="{Binding Name, StringFormat='Photo of {0}'}" />
+                                <Grid Grid.Column="1" Padding="14" RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="*,Auto" RowSpacing="6" ColumnSpacing="10">
                                     <Label Text="{Binding Name}"
-                                           FontSize="20"
+                                           FontSize="19"
                                            FontAttributes="Bold"
                                            TextColor="{AppThemeBinding Light=#4A2010, Dark=#FDF0DA}"
                                            SemanticProperties.HeadingLevel="Level2" />
@@ -128,7 +130,7 @@
                                     <Label Grid.Row="1"
                                            Grid.ColumnSpan="2"
                                            Text="{Binding Description}"
-                                           FontSize="14"
+                                           FontSize="13"
                                            TextColor="{AppThemeBinding Light=#6B4E3D, Dark=#D8C4AC}"
                                            LineBreakMode="TailTruncation" />
                                     <Label Grid.Row="2"
@@ -136,14 +138,14 @@
                                            Text="{Binding MacroSummary}"
                                            FontSize="13"
                                            TextColor="{AppThemeBinding Light=#3B7A57, Dark=#8CE6A1}" />
-                                    <Grid Grid.Row="3" Grid.ColumnSpan="2" ColumnDefinitions="*,Auto" Margin="0,4,0,0">
+                                    <Grid Grid.Row="3" Grid.ColumnSpan="2" ColumnDefinitions="*,Auto" Margin="0,2,0,0">
                                         <Label Text="{Binding Category}"
                                                FontSize="13"
                                                FontAttributes="Bold"
                                                TextColor="{AppThemeBinding Light=#C41E1E, Dark=#F09C7B}" />
                                         <Button Grid.Column="1"
                                                 Text="Details"
-                                                Padding="14,8"
+                                                Padding="12,6"
                                                 BackgroundColor="{AppThemeBinding Light=#C41E1E, Dark=#E8A840}"
                                                 TextColor="{AppThemeBinding Light=#FFFFFF, Dark=#261307}"
                                                 CommandParameter="{Binding Id}"

@@ -52,6 +52,7 @@ public partial class FoodDetailPage : ContentPage
         MacroLabel.Text = currentItem.MacroSummary;
         DescriptionLabel.Text = currentItem.Description;
         AllergyLabel.Text = currentItem.AllergyNote;
+        ItemImage.Source = string.IsNullOrWhiteSpace(currentItem.ImageName) ? null : currentItem.ImageName;
         SemanticProperties.SetDescription(NameLabel, currentItem.AccessibleSummary);
     }
 

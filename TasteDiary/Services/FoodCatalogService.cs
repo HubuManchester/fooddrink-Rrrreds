@@ -28,7 +28,8 @@ public static class FoodCatalogService
             Carbs = 68,
             Fat = 18,
             AllergyNote = "含麸质和牛肉。",
-            Tags = "中式 午餐 牛肉 面食 热门"
+            Tags = "中式 午餐 牛肉 面食 热门",
+            ImageName = "beef_noodle_soup"
         },
         new()
         {
@@ -40,7 +41,8 @@ public static class FoodCatalogService
             Carbs = 56,
             Fat = 8,
             AllergyNote = "含乳制品。珍珠含木薯淀粉。",
-            Tags = "饮品 奶茶 甜品 台湾"
+            Tags = "饮品 奶茶 甜品 台湾",
+            ImageName = "bubble_tea"
         },
         new()
         {
@@ -52,7 +54,8 @@ public static class FoodCatalogService
             Carbs = 62,
             Fat = 14,
             AllergyNote = "含鸡蛋。",
-            Tags = "中式 家常 午餐 米饭 快手"
+            Tags = "中式 家常 午餐 米饭 快手",
+            ImageName = "tomato_egg_rice"
         },
         new()
         {
@@ -64,7 +67,8 @@ public static class FoodCatalogService
             Carbs = 44,
             Fat = 16,
             AllergyNote = "含麸质、鸡蛋和芝麻。",
-            Tags = "早餐 中式 街头小吃 热门"
+            Tags = "早餐 中式 街头小吃 热门",
+            ImageName = "jianbing_pancake"
         },
         new()
         {
@@ -76,7 +80,8 @@ public static class FoodCatalogService
             Carbs = 28,
             Fat = 38,
             AllergyNote = "含大豆、辣椒。可能含贝类。",
-            Tags = "中式 晚餐 麻辣 聚餐 重口味"
+            Tags = "中式 晚餐 麻辣 聚餐 重口味",
+            ImageName = "mala_stir_fry"
         },
         new()
         {
@@ -88,7 +93,8 @@ public static class FoodCatalogService
             Carbs = 38,
             Fat = 20,
             AllergyNote = "含麸质和猪肉。",
-            Tags = "中式 午餐 点心 蒸品 上海"
+            Tags = "中式 午餐 点心 蒸品 上海",
+            ImageName = "xiaolongbao"
         },
         new()
         {
@@ -100,7 +106,8 @@ public static class FoodCatalogService
             Carbs = 42,
             Fat = 16,
             AllergyNote = "含麸质和大豆。油条为油炸食品。",
-            Tags = "早餐 中式 经典 豆浆 油条"
+            Tags = "早餐 中式 经典 豆浆 油条",
+            ImageName = "soy_milk_youtiao"
         },
         new()
         {
@@ -112,7 +119,8 @@ public static class FoodCatalogService
             Carbs = 48,
             Fat = 10,
             AllergyNote = "含芒果和椰奶。",
-            Tags = "饮品 甜品 港式 夏日 芒果"
+            Tags = "饮品 甜品 港式 夏日 芒果",
+            ImageName = "mango_pomelo_sago"
         }
     ];
 
