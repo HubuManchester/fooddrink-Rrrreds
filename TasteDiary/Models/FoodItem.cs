@@ -38,6 +38,9 @@ public sealed class FoodItem
     public string ImageName { get; set; } = string.Empty;
 
     [JsonIgnore]
+    public ImageSource? ItemImage => string.IsNullOrWhiteSpace(ImageName) ? null : ImageSource.FromFile(ImageName);
+
+    [JsonIgnore]
     public string CaloriesLabel => $"{Calories} kcal";
 
     [JsonIgnore]

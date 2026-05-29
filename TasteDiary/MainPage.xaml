@@ -106,7 +106,7 @@
                                 <Shadow Brush="#22000000" Offset="0,5" Radius="14" Opacity="0.34" />
                             </Border.Shadow>
                             <Grid ColumnDefinitions="90,*" MinimumHeightRequest="110">
-                                <Image Source="{Binding ImageName}"
+                                <Image Source="{Binding ItemImage}"
                                        Aspect="AspectFill"
                                        SemanticProperties.Description="{Binding Name, StringFormat='Photo of {0}'}" />
                                 <Grid Grid.Column="1" Padding="14" RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="*,Auto" RowSpacing="6" ColumnSpacing="10">
