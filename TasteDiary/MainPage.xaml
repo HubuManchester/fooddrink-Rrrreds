@@ -35,7 +35,7 @@
                            TextColor="#FFFFFF"
                            SemanticProperties.HeadingLevel="Level1" />
                     <Label Grid.Row="1"
-                           Text="Track the flavours of Chinese cuisine — nutrition, photos, and meal memories."
+                           Text="Track nutrition, flavour, photos, and meal context in one place."
                            FontSize="15"
                            TextColor="#FFF5E8" />
                     <Grid Grid.Row="2" ColumnDefinitions="*,*,*" ColumnSpacing="8" Margin="0,3,0,0">

@@ -20,107 +20,107 @@ public static class FoodCatalogService
     [
         new()
         {
-            Name = "红烧牛肉面",
-            Category = "午餐",
-            Description = "手工拉面配红烧牛腱、青菜和浓郁牛骨汤，撒上葱花和香菜。",
+            Name = "Braised Beef Noodle Soup",
+            Category = "Lunch",
+            Description = "Hand-pulled noodles with braised beef shank, bok choy, and rich bone broth, topped with scallions and coriander.",
             Calories = 580,
             Protein = 32,
             Carbs = 68,
             Fat = 18,
-            AllergyNote = "含麸质和牛肉。",
-            Tags = "中式 午餐 牛肉 面食 热门",
-            ImageName = "beef_noodle_soup"
+            AllergyNote = "Contains gluten and beef.",
+            Tags = "chinese lunch beef noodles popular",
+            ImageName = "FoodImages/beef_noodle_soup.jpeg"
         },
         new()
         {
-            Name = "珍珠奶茶",
-            Category = "饮品",
-            Description = "经典台式奶茶配Q弹珍珠，可选择半糖或少糖。",
+            Name = "Bubble Milk Tea",
+            Category = "Drink",
+            Description = "Classic Taiwanese milk tea with chewy tapioca pearls. Half-sugar or less-sugar options recommended.",
             Calories = 320,
             Protein = 4,
             Carbs = 56,
             Fat = 8,
-            AllergyNote = "含乳制品。珍珠含木薯淀粉。",
-            Tags = "饮品 奶茶 甜品 台湾",
-            ImageName = "bubble_tea"
+            AllergyNote = "Contains dairy. Pearls contain tapioca starch.",
+            Tags = "drink milk tea dessert taiwan",
+            ImageName = "FoodImages/bubble_tea.jpeg"
         },
         new()
         {
-            Name = "番茄炒蛋盖饭",
-            Category = "午餐",
-            Description = "经典家常菜——嫩滑炒蛋配酸甜番茄，盖在热腾腾的白米饭上。",
+            Name = "Tomato Egg Rice Bowl",
+            Category = "Lunch",
+            Description = "A classic home-style dish — soft scrambled eggs with sweet-and-sour tomatoes served over steamed white rice.",
             Calories = 450,
             Protein = 18,
             Carbs = 62,
             Fat = 14,
-            AllergyNote = "含鸡蛋。",
-            Tags = "中式 家常 午餐 米饭 快手",
-            ImageName = "tomato_egg_rice"
+            AllergyNote = "Contains eggs.",
+            Tags = "chinese home-style lunch rice quick",
+            ImageName = "FoodImages/tomato_egg_rice.jpeg"
         },
         new()
         {
-            Name = "煎饼果子",
-            Category = "早餐",
-            Description = "绿豆面薄饼摊鸡蛋，刷甜面酱和辣酱，夹油条或薄脆。",
+            Name = "Jianbing Pancake",
+            Category = "Breakfast",
+            Description = "Mung bean crepe with egg, sweet bean paste and chilli sauce, wrapped around a crispy cracker or youtiao.",
             Calories = 380,
             Protein = 14,
             Carbs = 44,
             Fat = 16,
-            AllergyNote = "含麸质、鸡蛋和芝麻。",
-            Tags = "早餐 中式 街头小吃 热门",
-            ImageName = "jianbing_pancake"
+            AllergyNote = "Contains gluten, eggs, and sesame.",
+            Tags = "breakfast chinese street-food popular",
+            ImageName = "FoodImages/jianbing_pancake.jpeg"
         },
         new()
         {
-            Name = "麻辣香锅",
-            Category = "晚餐",
-            Description = "自选肉类、海鲜和蔬菜，以花椒和干辣椒爆炒，麻辣鲜香。",
+            Name = "Mala Stir-Fry Pot",
+            Category = "Dinner",
+            Description = "Choose-your-own meats, seafood, and vegetables wok-fried with Sichuan peppercorns and dried chillies — numbing, spicy, and aromatic.",
             Calories = 680,
             Protein = 42,
             Carbs = 28,
             Fat = 38,
-            AllergyNote = "含大豆、辣椒。可能含贝类。",
-            Tags = "中式 晚餐 麻辣 聚餐 重口味",
-            ImageName = "mala_stir_fry"
+            AllergyNote = "Contains soy and chilli. May contain shellfish.",
+            Tags = "chinese dinner mala spicy sharing",
+            ImageName = "FoodImages/mala_stir_fry.jpg"
         },
         new()
         {
-            Name = "小笼包",
-            Category = "午餐",
-            Description = "薄皮包裹鲜猪肉馅和滚烫汤汁，配姜丝和醋蘸食。一笼六只。",
+            Name = "Xiaolongbao (Soup Dumplings)",
+            Category = "Lunch",
+            Description = "Thin-skinned dumplings filled with minced pork and piping-hot broth. Served with shredded ginger and vinegar. Six per steamer.",
             Calories = 420,
             Protein = 24,
             Carbs = 38,
             Fat = 20,
-            AllergyNote = "含麸质和猪肉。",
-            Tags = "中式 午餐 点心 蒸品 上海",
-            ImageName = "xiaolongbao"
+            AllergyNote = "Contains gluten and pork.",
+            Tags = "chinese lunch dim-sum steamed shanghai",
+            ImageName = "FoodImages/xiaolongbao.jpg"
         },
         new()
         {
-            Name = "豆浆油条",
-            Category = "早餐",
-            Description = "现磨甜豆浆配现炸酥脆油条，经典中式早餐搭配。",
+            Name = "Soy Milk & Youtiao",
+            Category = "Breakfast",
+            Description = "Freshly ground sweet soy milk paired with crispy deep-fried dough sticks — a classic Chinese breakfast combo.",
             Calories = 350,
             Protein = 12,
             Carbs = 42,
             Fat = 16,
-            AllergyNote = "含麸质和大豆。油条为油炸食品。",
-            Tags = "早餐 中式 经典 豆浆 油条",
-            ImageName = "soy_milk_youtiao"
+            AllergyNote = "Contains gluten and soy. Youtiao is deep-fried.",
+            Tags = "breakfast chinese classic soy-milk youtiao",
+            ImageName = "FoodImages/soy_milk_youtiao.jpg"
         },
         new()
         {
-            Name = "杨枝甘露",
-            Category = "饮品",
-            Description = "芒果、西柚、椰奶和西米的经典港式甜品饮品，清甜解暑。",
+            Name = "Mango Pomelo Sago",
+            Category = "Drink",
+            Description = "A classic Hong Kong dessert drink with mango, pomelo, coconut milk, and sago pearls — sweet, creamy, and refreshing.",
             Calories = 280,
             Protein = 3,
             Carbs = 48,
             Fat = 10,
-            AllergyNote = "含芒果和椰奶。",
-            Tags = "饮品 甜品 港式 夏日 芒果",
-            ImageName = "mango_pomelo_sago"
+            AllergyNote = "Contains mango and coconut milk.",
+            Tags = "drink dessert hong-kong summer mango",
+            ImageName = "FoodImages/mango_pomelo_sago.jpeg"
         }
     ];
 
