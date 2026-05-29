@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TasteDiary.AddItemPage"
+             Title="Add Record">
+    <ScrollView>
+        <ScrollView.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="{AppThemeBinding Light=#FFF8ED, Dark=#130F0C}" Offset="0.0" />
+                <GradientStop Color="{AppThemeBinding Light=#FFFDF6, Dark=#0F1711}" Offset="1.0" />
+            </LinearGradientBrush>
+        </ScrollView.Background>
+        <VerticalStackLayout Padding="22" Spacing="16">
+            <Border StrokeThickness="0" Padding="18" BackgroundColor="{AppThemeBinding Light=#FFFDF8, Dark=#1A1712}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="8" />
+                </Border.StrokeShape>
+                <Grid RowDefinitions="Auto,Auto" RowSpacing="6">
+                    <Label Text="Add food or drink"
+                           FontSize="28"
+                           FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light=#4A2010, Dark=#FDF0DA}"
+                           SemanticProperties.HeadingLevel="Level1" />
+                    <Label Grid.Row="1"
+                           Text="Record the full details of a meal worth remembering."
+                           FontSize="15"
+                           TextColor="{AppThemeBinding Light=#8A6346, Dark=#D8C4AC}" />
+                </Grid>
+            </Border>
+
+            <Border StrokeThickness="1"
+                    Stroke="{AppThemeBinding Light=#E8D5A3, Dark=#3E3023}"
+                    BackgroundColor="{AppThemeBinding Light=#FFFFFA, Dark=#1A1712}"
+                    Padding="16">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="8" />
+                </Border.StrokeShape>
+                <VerticalStackLayout Spacing="14">
+                    <Label Text="Basic information" FontSize="16" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#C41E1E, Dark=#F09C7B}" />
+                    <Entry x:Name="NameEntry"
+                           Placeholder="Name"
+                           SemanticProperties.Hint="Required food or drink name" />
+                    <Picker x:Name="CategoryPicker"
+                            Title="Category"
+                            SemanticProperties.Hint="Required category">
+                        <Picker.Items>
+                            <x:String>早餐</x:String>
+                            <x:String>午餐</x:String>
+                            <x:String>晚餐</x:String>
+                            <x:String>小吃</x:String>
+                            <x:String>饮品</x:String>
+                        </Picker.Items>
+                    </Picker>
+                    <Editor x:Name="DescriptionEditor"
+                            Placeholder="Description, ingredients, flavour, or context"
+                            AutoSize="TextChanges"
+                            HeightRequest="104"
+                            SemanticProperties.Hint="Describe this food or drink" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border StrokeThickness="1"
+                    Stroke="{AppThemeBinding Light=#E8D5A3, Dark=#3E3023}"
+                    BackgroundColor="{AppThemeBinding Light=#FFFFFA, Dark=#1A1712}"
+                    Padding="16">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="8" />
+                </Border.StrokeShape>
+                <VerticalStackLayout Spacing="14">
+                    <Label Text="Nutrition data" FontSize="16" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#3B7A57, Dark=#8CE6A1}" />
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                        <Entry x:Name="CaloriesEntry"
+                               Placeholder="Calories"
+                               Keyboard="Numeric"
+                               SemanticProperties.Hint="Required calories as a number" />
+                        <Entry x:Name="ProteinEntry"
+                               Grid.Column="1"
+                               Placeholder="Protein g"
+                               Keyboard="Numeric" />
+                    </Grid>
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                        <Entry x:Name="CarbsEntry"
+                               Placeholder="Carbs g"
+                               Keyboard="Numeric" />
+                        <Entry x:Name="FatEntry"
+                               Grid.Column="1"
+                               Placeholder="Fat g"
+                               Keyboard="Numeric" />
+                    </Grid>
+                    <Entry x:Name="AllergyEntry"
+                           Placeholder="Allergy note or dietary restriction"
+                           SemanticProperties.Hint="Enter allergy or dietary information" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border x:Name="ValidationPanel"
+                    IsVisible="False"
+                    StrokeThickness="0"
+                    BackgroundColor="{AppThemeBinding Light=#FFE8E0, Dark=#40201C}"
+                    Padding="14">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="8" />
+                </Border.StrokeShape>
+                <Label x:Name="ValidationLabel"
+                       TextColor="{AppThemeBinding Light=#B43820, Dark=#FFB4A6}"
+                       FontAttributes="Bold" />
+            </Border>
+
+            <Button Text="Save record"
+                    FontAttributes="Bold"
+                    BackgroundColor="#C41E1E"
+                    TextColor="#FFFFFF"
+                    Clicked="OnSaveClicked"
+                    SemanticProperties.Hint="Validate and save this record" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

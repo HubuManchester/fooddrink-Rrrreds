@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="TasteDiary.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:TasteDiary"
+    Title="食味记"
+    FlyoutBehavior="Disabled"
+    Shell.BackgroundColor="{AppThemeBinding Light=#FFF8ED, Dark=#1A1008}"
+    Shell.ForegroundColor="{AppThemeBinding Light=#4A2010, Dark=#FDF0DA}"
+    Shell.TitleColor="{AppThemeBinding Light=#4A2010, Dark=#FDF0DA}"
+    Shell.UnselectedColor="{AppThemeBinding Light=#B89578, Dark=#C4A68A}"
+    Shell.TabBarBackgroundColor="{AppThemeBinding Light=#FFF8ED, Dark=#1A1008}"
+    Shell.TabBarForegroundColor="{AppThemeBinding Light=#C41E1E, Dark=#E8A840}"
+    Shell.TabBarTitleColor="{AppThemeBinding Light=#C41E1E, Dark=#E8A840}"
+    Shell.TabBarUnselectedColor="{AppThemeBinding Light=#B89578, Dark=#C4A68A}">
+
+    <TabBar>
+        <ShellContent
+            Title="Foods"
+            ContentTemplate="{DataTemplate local:MainPage}"
+            Route="MainPage" />
+        <ShellContent
+            Title="Hardware"
+            ContentTemplate="{DataTemplate local:HardwarePage}"
+            Route="HardwarePage" />
+        <ShellContent
+            Title="Settings"
+            ContentTemplate="{DataTemplate local:SettingsPage}"
+            Route="SettingsPage" />
+    </TabBar>
+</Shell>
