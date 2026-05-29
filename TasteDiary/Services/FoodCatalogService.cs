@@ -131,6 +131,7 @@ public static class FoodCatalogService
     public static async Task<IReadOnlyList<FoodItem>> SearchAsync(string? query)
     {
         var items = await GetAllAsync();
+        await LoadImagesAsync(items);
 
         if (string.IsNullOrWhiteSpace(query))
         {
@@ -169,7 +170,13 @@ public static class FoodCatalogService
             }
         }
 
-        return cachedItems.FirstOrDefault(item => item.Id == id);
+        var result = cachedItems.FirstOrDefault(item => item.Id == id);
+        if (result is not null)
+        {
+            await LoadImagesAsync([result]);
+        }
+
+        return result;
     }
 
     public static async Task<FoodItem> AddAsync(FoodItem item)
@@ -216,5 +223,29 @@ public static class FoodCatalogService
 
         LastLoadUsedMockApi = false;
         return cachedItems;
+    }
+
+    private static async Task LoadImagesAsync(IEnumerable<FoodItem> items)
+    {
+        foreach (var item in items)
+        {
+            if (string.IsNullOrWhiteSpace(item.ImageName) || item.ItemImage is not null)
+            {
+                continue;
+            }
+
+            try
+            {
+                using var stream = await FileSystem.OpenAppPackageFileAsync(item.ImageName);
+                var memoryStream = new MemoryStream();
+                await stream.CopyToAsync(memoryStream);
+                memoryStream.Position = 0;
+                item.ItemImage = ImageSource.FromStream(() => new MemoryStream(memoryStream.ToArray()));
+            }
+            catch
+            {
+                // Image not found in app package; skip gracefully.
+            }
+        }
     }
 }
