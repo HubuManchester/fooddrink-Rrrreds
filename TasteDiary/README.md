@@ -1,58 +1,191 @@
-# 食光营养助手
+# TasteDiary &mdash; Food & Drink Nutrition Tracker
 
-食光营养助手是一个基于 .NET MAUI 的“食品与饮品”课程项目应用。应用可以记录食品和饮品，展示营养摘要，验证用户输入，并演示移动设备硬件功能。
+A cross-platform mobile app for browsing, searching, and recording food &amp; drink items with detailed nutritional information, built with **.NET MAUI** (.NET 9.0) for the 6G6Z0014 Mobile Computing coursework at Manchester Metropolitan University.
 
-## 主要功能
+TasteDiary demonstrates six mobile hardware APIs (camera, GPS, geocoding, text-to-speech, vibration, haptic feedback) alongside accessibility features aligned with WCAG principles.
 
-- 食品和饮品列表，支持搜索和详情页。
-- 添加记录表单，检查必填项和营养数值。
-- 使用相机拍摄食品照片并预览。
-- 使用定位记录用餐或购买地点。
-- 使用文字转语音朗读营养摘要和帮助内容。
-- 使用震动与触觉反馈提供操作提醒。
-- 支持主题切换和大字体模式。
-- 包含语义标签、屏幕阅读器播报和清晰的验证提示。
+---
 
-## 评分点覆盖
+## Table of Contents
 
-- UI/UX 与无障碍：XAML 页面、底部导航、一致的视觉风格、深色模式、语义描述和屏幕阅读器播报。
-- 移动硬件：相机、定位、文字转语音、震动和触觉反馈。
-- 功能完整性：列表、搜索、添加、详情、设置和硬件演示流程。
-- 验证与错误处理：必填项检查、数字检查、权限错误和硬件不可用提示。
-- 代码质量：模型和服务分离、命名清晰、可复用的目录服务，以及范围清晰的页面代码。
-- 部署：面向 Android 和 Windows 的 .NET MAUI 跨平台应用。
-- GitHub 使用：建议持续提交，例如 `添加食品列表`、`实现硬件页面`、`添加输入验证`。
+- [Features](#features)
+- [Built-in Food Items](#built-in-food-items)
+- [Project Structure](#project-structure)
+- [Build &amp; Run](#build--run)
+- [Marking Criteria Coverage](#marking-criteria-coverage)
+- [Mobile Hardware APIs](#mobile-hardware-apis)
+- [Accessibility](#accessibility)
+- [Screencast Checklist](#screencast-checklist)
 
-## 运行方式
+---
 
-使用安装了 .NET MAUI 工作负载的 Visual Studio 2022 打开 `FoodDrinkApp.csproj` 或 `FoodDrinkApp.sln`。
+## Features
 
-推荐演示目标：
+| Feature | Description |
+|---------|-------------|
+| 🔍 **Food Search** | Real-time filtering by name, category, description, and tags |
+| 📋 **Food List** | Scrollable cards with thumbnail, calorie badge, macro summary, and category |
+| 🔄 **Pull-to-Refresh** | RefreshView bound to the data source with screen-reader announcement |
+| ➕ **Add Record** | Validated form with name, category, description, calories, protein, carbs, fat, and allergen notes |
+| 📊 **Nutrition Detail** | Full nutrition card with image, macros, allergens, TTS read-aloud, and vibration |
+| 📸 **Camera** | Capture food photos using `MediaPicker` |
+| 📍 **GPS &amp; Geocoding** | Get coordinates and reverse-geocode to a human-readable address |
+| 🔊 **Text-to-Speech** | Read nutrition summaries and help text aloud (English locale) |
+| 📳 **Vibration &amp; Haptics** | Haptic feedback on buttons, validation errors, and reminders |
+| 🎨 **Theme Switching** | System default / Light / Dark mode applied instantly |
+| 🔤 **Large Text Mode** | 1.22&times; font scaling across all pages (idempotent, survives navigation) |
+| ♿ **Screen Reader** | `SemanticScreenReader.Announce()` on every user action and state change |
+| ☁️ **Mock API Ready** | Optional mockapi.io integration with automatic local fallback when offline |
 
-- Android 模拟器
-- Windows Machine
+---
 
-Windows 构建命令：
+## Built-in Food Items
 
-```powershell
-dotnet build .\FoodDrinkApp.csproj -f net9.0-windows10.0.19041.0
+| # | Name | Category | kcal | P | C | F |
+|---|------|----------|------|---|---|---|
+| 1 | Braised Beef Noodle Soup | Lunch | 580 | 32 | 68 | 18 |
+| 2 | Bubble Milk Tea | Drink | 320 | 4 | 56 | 8 |
+| 3 | Tomato Egg Rice Bowl | Lunch | 450 | 18 | 62 | 14 |
+| 4 | Jianbing Pancake | Breakfast | 380 | 14 | 44 | 16 |
+| 5 | Mala Stir-Fry Pot | Dinner | 680 | 42 | 28 | 38 |
+| 6 | Xiaolongbao (Soup Dumplings) | Lunch | 420 | 24 | 38 | 20 |
+| 7 | Soy Milk &amp; Youtiao | Breakfast | 350 | 12 | 42 | 16 |
+| 8 | Mango Pomelo Sago | Drink | 280 | 3 | 48 | 10 |
+
+*P = Protein, C = Carbs, F = Fat (all in grams)*
+
+---
+
+## Project Structure
+
+```
+TasteDiary/
+├── App.xaml(.cs)                # Application entry point
+├── AppShell.xaml(.cs)           # Shell: 3-tab bar + 2 push routes
+├── MauiProgram.cs               # MAUI builder (fonts, debug logging)
+├── GlobalXmlns.cs               # Global XAML namespace mapping
+│
+├── Models/
+│   └── FoodItem.cs              # Data model with JSON serialisation
+│
+├── Services/
+│   ├── FoodCatalogService.cs    # Data layer (mockapi.io + 8 local items)
+│   ├── SpeechService.cs         # TTS wrapper (English locale, cancellation)
+│   ├── AccessibilityService.cs  # Font scaling (1.22×, ConditionalWeakTable)
+│   └── MockApiConfig.cs         # mockapi.io endpoint config
+│
+├── *.xaml(.cs)                  # 5 pages (see below)
+│
+├── Resources/
+│   ├── AppIcon/                 # SVG app icon (green #2F6B45)
+│   ├── Splash/                  # SVG splash screen
+│   ├── Fonts/                   # OpenSans Regular & Semibold
+│   ├── Images/                  # MAUI image resources
+│   └── Raw/FoodImages/          # 8 embedded food photos
+│
+└── Platforms/
+    ├── Android/                 # MainActivity, MainApplication
+    ├── iOS/                     # AppDelegate, Program
+    ├── MacCatalyst/             # AppDelegate, Program
+    └── Windows/                 # App.xaml(.cs)
 ```
 
-Android 构建命令：
+### Pages
+
+| Page | Route | Purpose |
+|------|-------|---------|
+| `MainPage` | Tab &ldquo;Foods&rdquo; | Food list, search, pull-to-refresh, navigate to Add/Detail |
+| `HardwarePage` | Tab &ldquo;Hardware&rdquo; | Camera, GPS, TTS, vibration, haptic feedback demo |
+| `SettingsPage` | Tab &ldquo;Settings&rdquo; | Theme picker (System/Light/Dark), large-text toggle |
+| `AddItemPage` | Push route | Validated form to add a new food record |
+| `FoodDetailPage` | Push route `?id=...` | Nutrition detail with TTS read-aloud and vibration |
+
+---
+
+## Build &amp; Run
+
+### Prerequisites
+
+- [.NET 9.0 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
+- MAUI workload: `dotnet workload install maui`
+- (Android) Android SDK via Visual Studio or standalone
+- (Windows) Windows 10 19041+ or Windows 11
+
+### Windows
 
 ```powershell
-dotnet build .\FoodDrinkApp.csproj -f net9.0-android
+cd TasteDiary
+dotnet run --framework net9.0-windows10.0.19041.0
 ```
 
-本项目通过 `Directory.Build.props` 将构建输出放到 `C:\MauiBuild\NutriTrack\`，用于规避 Android 打包工具在中文路径下的 `assets` 路径问题。
+### Android
 
-## 录屏演示清单
+```powershell
+dotnet build -c Release -f net9.0-android
+# Deploy the APK from bin\Release\net9.0-android\
+```
 
-- 说明“食品与饮品”主题和“食光营养助手”的应用概念。
-- 展示搜索、详情页和添加新记录。
-- 演示不填必填项、输入非法数字时的验证提示。
-- 演示相机、定位、文字转语音、震动和触觉反馈。
-- 展示深色模式和大字体模式。
-- 展示关键代码文件：模型、服务、页面和 Android 权限配置。
-- 展示 Android 和 Windows 部署效果。
-- 展示 GitHub 提交历史和 README。
+Or open `TasteDiary.sln` in Visual Studio 2022, select an Android emulator, and press **F5**.
+
+### Enable mockapi.io (Optional)
+
+1. Create a resource at [mockapi.io](https://mockapi.io)
+2. Set `EndpointUrl` in `Services/MockApiConfig.cs`
+3. The app will use the remote API; if offline it falls back to local data automatically
+
+---
+
+## Marking Criteria Coverage
+
+| Criterion (Weight) | Implementation |
+|--------------------|----------------|
+| **UI/UX &amp; Accessibility** (30%) | 5 XAML pages, warm earth-tone theme, dark mode, large-text scaling (1.22&times;), screen-reader announcements, semantic properties, WCAG-aligned colour contrast |
+| **Mobile Hardware** (20%) | 6 hardware APIs: Camera, GPS, Geocoding, TTS, Vibration, Haptic Feedback |
+| **Functionality** (20%) | Search, detail navigation, add record, pull-to-refresh, theme switching, empty states |
+| **Validation &amp; Error Handling** (10%) | Form validation with user-friendly messages, try/catch on all hardware calls, permission-denied handling, graceful API fallbacks |
+| **Code Quality** (10%) | Full XML documentation (`///`) on all public members, consistent naming, reusable helpers (`SetStatus`, `ApplyFontScale`, `Announce`), `sealed` classes, nullable reference types enabled |
+| **Deployment** (5%) | Cross-platform targets: Android + Windows (builds for iOS and Mac Catalyst also configured) |
+| **GitHub Usage** (5%) | Regular commits showing incremental development over multiple days |
+
+---
+
+## Mobile Hardware APIs
+
+| # | API | Method | Page(s) |
+|---|-----|--------|---------|
+| 1 | **Camera** | `MediaPicker.Default.CapturePhotoAsync()` | Hardware |
+| 2 | **GPS** | `Geolocation.Default.GetLocationAsync()` | Hardware |
+| 3 | **Geocoding** | `Geocoding.Default.GetPlacemarksAsync()` | Hardware |
+| 4 | **Text-to-Speech** | `TextToSpeech.Default.SpeakAsync()` | Hardware, Detail |
+| 5 | **Vibration** | `Vibration.Default.Vibrate()` | Hardware, Detail, Add |
+| 6 | **Haptic Feedback** | `HapticFeedback.Default.Perform()` | Hardware, Detail, Add |
+
+Vibration and haptic feedback, which cannot be captured in emulator recordings, are verified via an on-screen counter that increments each time they are triggered.
+
+---
+
+## Accessibility
+
+Accessibility features are aligned with the four WCAG principles:
+
+| Principle | Implementation |
+|-----------|---------------|
+| **Perceivable** | Large-text mode (1.22&times;), high-contrast earth-tone palette, `SemanticScreenReader.Announce()` on all state changes |
+| **Operable** | All controls keyboard/touch accessible, semantic heading levels on labels, clear `SemanticProperties.Hint` on buttons |
+| **Understandable** | User-friendly validation errors (&ldquo;Please enter a food or drink name&rdquo;), confirmation alerts, descriptive status labels |
+| **Robust** | `SemanticProperties.Description` on images, `ConditionalWeakTable` for idempotent font scaling, screen-reader-compatible navigation |
+
+---
+
+## Screencast Checklist
+
+- [ ] Explain the &ldquo;Food &amp; Drink&rdquo; theme and TasteDiary concept
+- [ ] Walk through the 3-tab navigation (Foods &rarr; Hardware &rarr; Settings)
+- [ ] Search the food list and show real-time filtering
+- [ ] Open a detail page, use TTS read-aloud, trigger vibration
+- [ ] Add a new record with validation (show error on empty fields, then fix and save)
+- [ ] Demo all 6 hardware features on the Hardware page
+- [ ] Switch themes (Light &rarr; Dark &rarr; System) and toggle large text
+- [ ] Show key source files: Models, Services, XML documentation
+- [ ] Show Android deployment and a second platform (Windows)
+- [ ] Show GitHub commit history and README
