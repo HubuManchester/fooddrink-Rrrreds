@@ -2,27 +2,49 @@ using TasteDiary.Services;
 
 namespace TasteDiary;
 
+/// <summary>
+/// Demonstrates the following mobile hardware APIs in one page:
+/// <list type="bullet">
+///   <item><see cref="MediaPicker"/> — camera capture</item>
+///   <item><see cref="Geolocation"/> — GPS location</item>
+///   <item><see cref="Geocoding"/> — reverse geocoding (coordinates to address)</item>
+///   <item><see cref="TextToSpeech"/> — text-to-speech</item>
+///   <item><see cref="Vibration"/> — device vibration</item>
+///   <item><see cref="HapticFeedback"/> — haptic feedback</item>
+/// </list>
+/// Each hardware feature has a dedicated button, status label, and error handling with
+/// user-friendly messages and screen-reader announcements.
+/// </summary>
 public partial class HardwarePage : ContentPage
 {
+    /// <summary>Tracks the number of times haptic feedback has been triggered for visual verification.</summary>
     private int feedbackTestCount;
 
+    /// <summary>Initialises the page components defined in HardwarePage.xaml.</summary>
     public HardwarePage()
     {
         InitializeComponent();
     }
 
+    /// <summary>Applies accessibility font scaling when the page appears.</summary>
     protected override void OnAppearing()
     {
         base.OnAppearing();
         AccessibilityService.ApplyFontScale(this);
     }
 
+    /// <summary>Stops any ongoing Text-to-Speech when navigating away from this page.</summary>
     protected override void OnDisappearing()
     {
         SpeechService.Stop();
         base.OnDisappearing();
     }
 
+    /// <summary>
+    /// Captures a photo using the device camera via <see cref="MediaPicker.CapturePhotoAsync"/>.
+    /// Displays the captured image and announces the result via screen reader.
+    /// Handles <see cref="PermissionException"/> for denied camera access.
+    /// </summary>
     private async void OnTakePhotoClicked(object? sender, EventArgs e)
     {
         try
@@ -58,6 +80,12 @@ public partial class HardwarePage : ContentPage
         }
     }
 
+    /// <summary>
+    /// Gets the current device location using <c>Geolocation.Default.GetLocationAsync</c>
+    /// with medium accuracy and a 10-second timeout. Performs reverse geocoding to obtain
+    /// a human-readable address. Falls back to a hard-coded address for known coordinate ranges
+    /// when geocoding is unavailable (e.g. on emulators).
+    /// </summary>
     private async void OnGetLocationClicked(object? sender, EventArgs e)
     {
         try
@@ -86,6 +114,13 @@ public partial class HardwarePage : ContentPage
         }
     }
 
+    /// <summary>
+    /// Attempts to resolve a human-readable address from geographic coordinates using
+    /// <c>Geocoding.Default.GetPlacemarksAsync</c>. Falls back to a hard-coded lookup
+    /// if the geocoding service returns no results.
+    /// </summary>
+    /// <param name="location">The geographic location to resolve.</param>
+    /// <returns>A formatted address string, or a fallback message.</returns>
     private static async Task<string> BuildAddressTextAsync(Location location)
     {
         try
@@ -106,6 +141,13 @@ public partial class HardwarePage : ContentPage
         return BuildFallbackAddress(location);
     }
 
+    /// <summary>
+    /// Formats a <see cref="Placemark"/> into a "/"-separated address string
+    /// (Country / AdminArea / Locality / SubLocality / Thoroughfare).
+    /// Duplicate and empty parts are filtered out.
+    /// </summary>
+    /// <param name="placemark">The resolved placemark, or <c>null</c>.</param>
+    /// <returns>A formatted address string, or an empty string if the placemark is null or empty.</returns>
     private static string FormatPlacemark(Placemark? placemark)
     {
         if (placemark is null)
@@ -128,6 +170,12 @@ public partial class HardwarePage : ContentPage
         return parts.Length == 0 ? string.Empty : string.Join(" / ", parts);
     }
 
+    /// <summary>
+    /// Provides a hard-coded address for well-known coordinate ranges
+    /// (e.g. Mountain View, San Francisco Bay Area, China) when reverse geocoding is unavailable.
+    /// </summary>
+    /// <param name="location">The geographic location.</param>
+    /// <returns>A user-readable fallback address string.</returns>
     private static string BuildFallbackAddress(Location location)
     {
         if (IsNear(location, 37.422, -122.084, 0.08))
@@ -148,17 +196,29 @@ public partial class HardwarePage : ContentPage
         return "Coordinates were found, but country and city were not returned by this device.";
     }
 
+    /// <summary>
+    /// Checks whether a location is within a given tolerance of a target latitude/longitude.
+    /// </summary>
+    /// <param name="location">The location to check.</param>
+    /// <param name="latitude">Target latitude.</param>
+    /// <param name="longitude">Target longitude.</param>
+    /// <param name="tolerance">Maximum absolute difference in degrees for both axes.</param>
+    /// <returns><c>true</c> if the location is within the tolerance range.</returns>
     private static bool IsNear(Location location, double latitude, double longitude, double tolerance)
     {
         return Math.Abs(location.Latitude - latitude) <= tolerance &&
                Math.Abs(location.Longitude - longitude) <= tolerance;
     }
 
+    /// <summary>
+    /// Reads the app help text aloud using the Text-to-Speech engine.
+    /// The help text describes what the app does in a single sentence.
+    /// </summary>
     private async void OnReadHelpClicked(object? sender, EventArgs e)
     {
         try
         {
-            const string helpText = "食味记 records foods and drinks, shows nutrition details, and uses camera, location, speech, and haptic feedback to make meal tracking more practical.";
+            const string helpText = "TasteDiary records foods and drinks, shows nutrition details, and uses camera, location, speech, and haptic feedback to make meal tracking more practical.";
             await SpeechService.SpeakAsync(helpText);
             SetStatus("Reading help content aloud.");
         }
@@ -168,12 +228,18 @@ public partial class HardwarePage : ContentPage
         }
     }
 
+    /// <summary>Stops any ongoing Text-to-Speech and updates the status label.</summary>
     private void OnStopSpeechClicked(object? sender, EventArgs e)
     {
         SpeechService.Stop();
         SetStatus("Reading stopped.");
     }
 
+    /// <summary>
+    /// Triggers a 450ms vibration and long-press haptic feedback, increments the test counter,
+    /// and updates the counter label for visual verification. This allows screen-recording viewers
+    /// to confirm the feature is working even though vibration cannot be captured in video.
+    /// </summary>
     private void OnFeedbackClicked(object? sender, EventArgs e)
     {
         try
@@ -190,6 +256,11 @@ public partial class HardwarePage : ContentPage
         }
     }
 
+    /// <summary>
+    /// Updates the on-screen status label and announces the message via screen reader.
+    /// Centralised helper used by all hardware handler methods.
+    /// </summary>
+    /// <param name="message">The status message to display and announce.</param>
     private void SetStatus(string message)
     {
         HardwareStatusLabel.Text = message;

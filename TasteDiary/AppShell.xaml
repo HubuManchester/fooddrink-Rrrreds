@@ -4,7 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:TasteDiary"
-    Title="食味记"
+    Title="TasteDiary"
     FlyoutBehavior="Disabled"
     Shell.BackgroundColor="{AppThemeBinding Light=#FFF8ED, Dark=#1A1008}"
     Shell.ForegroundColor="{AppThemeBinding Light=#4A2010, Dark=#FDF0DA}"

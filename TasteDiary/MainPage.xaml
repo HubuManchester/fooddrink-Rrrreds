@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:models="clr-namespace:TasteDiary.Models"
              x:Class="TasteDiary.MainPage"
-             Title="食味记">
+             Title="TasteDiary">
     <Grid RowDefinitions="Auto,*">
         <Grid.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -29,7 +29,7 @@
                     <Shadow Brush="#33000000" Offset="0,8" Radius="18" Opacity="0.45" />
                 </Border.Shadow>
                 <Grid RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="10">
-                    <Label Text="食味记"
+                    <Label Text="TasteDiary"
                            FontSize="31"
                            FontAttributes="Bold"
                            TextColor="#FFFFFF"
