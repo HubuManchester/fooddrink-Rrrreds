@@ -4,18 +4,30 @@ using TasteDiary.Models;
 
 namespace TasteDiary.Services;
 
+/// <summary>
+/// Central data service that loads, searches, and persists <see cref="FoodItem"/> records.
+/// When <see cref="MockApiConfig.IsConfigured"/> is <c>true</c>, all operations target the mockapi.io
+/// REST endpoint; otherwise the service falls back to a hard-coded list of local food items so the
+/// app remains fully functional without a network connection.
+/// </summary>
 public static class FoodCatalogService
 {
+    /// <summary>HTTP client with a 12-second timeout for all API calls.</summary>
     private static readonly HttpClient HttpClient = new()
     {
         Timeout = TimeSpan.FromSeconds(12)
     };
 
+    /// <summary>JSON serialisation options — property names are matched case-insensitively.</summary>
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
         PropertyNameCaseInsensitive = true
     };
 
+    /// <summary>
+    /// Hard-coded fallback food items covering 8 popular Chinese dishes across Breakfast, Lunch, Dinner, and Drink categories.
+    /// Used when mockapi.io is not configured or is unreachable.
+    /// </summary>
     private static readonly List<FoodItem> LocalFallbackItems =
     [
         new()
@@ -124,10 +136,21 @@ public static class FoodCatalogService
         }
     ];
 
+    /// <summary>In-memory cache of food items, initialised with the local fallback list.</summary>
     private static List<FoodItem> cachedItems = new(LocalFallbackItems);
 
+    /// <summary>
+    /// Indicates whether the most recent data load came from mockapi.io (<c>true</c>)
+    /// or from the local fallback list (<c>false</c>).
+    /// </summary>
     public static bool LastLoadUsedMockApi { get; private set; }
 
+    /// <summary>
+    /// Searches food items by name, category, description, and tags.
+    /// Returns all items sorted by name when <paramref name="query"/> is null or whitespace.
+    /// </summary>
+    /// <param name="query">Optional search keyword. Matching is case-insensitive.</param>
+    /// <returns>A read-only list of matching <see cref="FoodItem"/> records with images loaded.</returns>
     public static async Task<IReadOnlyList<FoodItem>> SearchAsync(string? query)
     {
         var items = await GetAllAsync();
@@ -149,6 +172,12 @@ public static class FoodCatalogService
             .ToList();
     }
 
+    /// <summary>
+    /// Retrieves a single food item by its unique identifier.
+    /// Attempts the mockapi.io endpoint first if configured; falls back to the local cache on failure.
+    /// </summary>
+    /// <param name="id">The unique identifier of the food item.</param>
+    /// <returns>The matching <see cref="FoodItem"/>, or <c>null</c> if not found.</returns>
     public static async Task<FoodItem?> GetByIdAsync(string id)
     {
         if (MockApiConfig.IsConfigured)
@@ -179,6 +208,11 @@ public static class FoodCatalogService
         return result;
     }
 
+    /// <summary>
+    /// Adds a new food item. Posts to mockapi.io if configured; otherwise appends to the local cache.
+    /// </summary>
+    /// <param name="item">The <see cref="FoodItem"/> to persist.</param>
+    /// <returns>The saved item (which may contain an API-assigned ID).</returns>
     public static async Task<FoodItem> AddAsync(FoodItem item)
     {
         if (MockApiConfig.IsConfigured)
@@ -198,6 +232,11 @@ public static class FoodCatalogService
         return item;
     }
 
+    /// <summary>
+    /// Loads all food items from the configured data source (mockapi.io or local fallback).
+    /// Updates <see cref="LastLoadUsedMockApi"/> accordingly.
+    /// </summary>
+    /// <returns>The current list of food items.</returns>
     private static async Task<IReadOnlyList<FoodItem>> GetAllAsync()
     {
         if (!MockApiConfig.IsConfigured)
@@ -225,6 +264,11 @@ public static class FoodCatalogService
         return cachedItems;
     }
 
+    /// <summary>
+    /// Loads embedded images from the app package for each item that has an <see cref="FoodItem.ImageName"/>
+    /// but no cached <see cref="FoodItem.ItemImage"/> yet. Failures (e.g. missing files) are silently skipped.
+    /// </summary>
+    /// <param name="items">The food items whose images should be loaded.</param>
     private static async Task LoadImagesAsync(IEnumerable<FoodItem> items)
     {
         foreach (var item in items)
