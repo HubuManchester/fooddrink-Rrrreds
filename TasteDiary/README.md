@@ -175,17 +175,5 @@ Accessibility features are aligned with the four WCAG principles:
 | **Understandable** | User-friendly validation errors (&ldquo;Please enter a food or drink name&rdquo;), confirmation alerts, descriptive status labels |
 | **Robust** | `SemanticProperties.Description` on images, `ConditionalWeakTable` for idempotent font scaling, screen-reader-compatible navigation |
 
----
 
-## Screencast Checklist
 
-- [ ] Explain the &ldquo;Food &amp; Drink&rdquo; theme and TasteDiary concept
-- [ ] Walk through the 3-tab navigation (Foods &rarr; Hardware &rarr; Settings)
-- [ ] Search the food list and show real-time filtering
-- [ ] Open a detail page, use TTS read-aloud, trigger vibration
-- [ ] Add a new record with validation (show error on empty fields, then fix and save)
-- [ ] Demo all 6 hardware features on the Hardware page
-- [ ] Switch themes (Light &rarr; Dark &rarr; System) and toggle large text
-- [ ] Show key source files: Models, Services, XML documentation
-- [ ] Show Android deployment and a second platform (Windows)
-- [ ] Show GitHub commit history and README
